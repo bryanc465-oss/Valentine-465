@@ -1,82 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Be My Valentine 💖</title>
+  <meta charset="UTF-8">
+  <title>Be My Valentine 💔💖</title>
 
   <style>
-    /* ===== GENERAL PAGE STYLES ===== */
     body {
       margin: 0;
       height: 100vh;
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #ffd6e8, #ffeef6);
+      background: radial-gradient(circle, #ffe0ec, #ffb6d5);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
     }
 
-    .container {
-      text-align: center;
+    .box {
       background: white;
       padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      max-width: 400px;
+      border-radius: 25px;
+      text-align: center;
       width: 90%;
+      max-width: 420px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
     }
 
     h1 {
-      color: #ff4d88;
-      margin-bottom: 10px;
+      color: #ff2f92;
+      margin-bottom: 15px;
     }
 
-    p {
-      color: #555;
-      min-height: 40px;
+    #message {
+      min-height: 50px;
+      font-size: 18px;
+      color: #444;
     }
 
-    /* ===== BUTTONS ===== */
+    .shake {
+      animation: shake 0.4s;
+    }
+
+    @keyframes shake {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+      100% { transform: translateX(0); }
+    }
+
     .buttons {
-      margin-top: 20px;
       position: relative;
-      height: 80px;
+      height: 100px;
+      margin-top: 20px;
     }
 
     button {
-      padding: 12px 24px;
+      position: absolute;
+      padding: 12px 26px;
       font-size: 18px;
+      border-radius: 40px;
       border: none;
-      border-radius: 30px;
       cursor: pointer;
       transition: all 0.3s ease;
-      position: absolute;
     }
 
-    #yesBtn {
-      background-color: #ff4d88;
+    #yes {
+      background: #ff2f92;
       color: white;
-      left: 30%;
+      left: 25%;
     }
 
-    #noBtn {
-      background-color: #ddd;
-      color: #333;
-      right: 30%;
+    #no {
+      background: #ccc;
+      right: 25%;
     }
 
-    /* ===== HEARTS ANIMATION ===== */
     .heart {
       position: fixed;
       bottom: -20px;
       font-size: 24px;
-      animation: floatUp 4s linear forwards;
+      animation: float 3s linear forwards;
     }
 
-    @keyframes floatUp {
+    @keyframes float {
       to {
-        transform: translateY(-110vh);
+        transform: translateY(-120vh) rotate(360deg);
         opacity: 0;
       }
     }
@@ -85,85 +94,76 @@
 
 <body>
 
-  <div class="container">
-    <h1>💖 Will you be my Valentine? 💖</h1>
-    <p id="message">Think carefully 😌</p>
+<div class="box">
+  <h1>💘 Will you be my Valentine? 💘</h1>
+  <p id="message">Choose wisely… my heart is fragile 🥺</p>
 
-    <div class="buttons">
-      <button id="yesBtn">Yes 💕</button>
-      <button id="noBtn">No 🙃</button>
-    </div>
+  <div class="buttons">
+    <button id="yes">YES 💖</button>
+    <button id="no">NO 💀</button>
   </div>
+</div>
 
-  <script>
-    // ===== VARIABLES =====
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn = document.getElementById("noBtn");
-    const message = document.getElementById("message");
+<script>
+  const yes = document.getElementById("yes");
+  const no = document.getElementById("no");
+  const msg = document.getElementById("message");
+  const box = document.querySelector(".box");
 
-    let noClicks = 0;
+  let noCount = 0;
 
-    const funnyMessages = [
-      "Are you sure? 🤨",
-      "I think you clicked the wrong button 😅",
-      "Try again… but slower 😌",
-      "The correct answer is Yes 💖",
-      "Stop playing, you know you want to 😏",
-      "Okay now you're just being dramatic 😭",
-      "Last warning… Yes is getting bigger 👀"
-    ];
+  const drama = [
+    "Wait… WHAT?! 😨",
+    "This is emotional damage 💔",
+    "Are you absolutely sure?? 😭",
+    "My ancestors are crying right now 😩",
+    "You clicked the wrong destiny…",
+    "Only ONE answer saves this love 😌",
+    "The universe demands YES 🌍💖"
+  ];
 
-    // ===== YES BUTTON LOGIC =====
-    yesBtn.addEventListener("click", () => {
-      message.innerText = "YAYYYY 💕 I knew it!!!";
+  yes.onclick = () => {
+    msg.innerText = "I KNEW IT 😭💖💖💖";
+    yes.style.display = "none";
+    no.style.display = "none";
 
-      // Create floating hearts celebration
-      for (let i = 0; i < 30; i++) {
-        createHeart();
-      }
-
-      // Hide the buttons after success
-      yesBtn.style.display = "none";
-      noBtn.style.display = "none";
-    });
-
-    // ===== NO BUTTON LOGIC =====
-    noBtn.addEventListener("click", () => {
-      noClicks++;
-
-      // Change message
-      const msgIndex = Math.min(noClicks - 1, funnyMessages.length - 1);
-      message.innerText = funnyMessages[msgIndex];
-
-      // Make YES button bigger
-      const yesScale = 1 + noClicks * 0.15;
-      yesBtn.style.transform = `scale(${yesScale})`;
-
-      // Make NO button smaller and move it
-      const noScale = Math.max(0.5, 1 - noClicks * 0.1);
-      noBtn.style.transform = `scale(${noScale})`;
-
-      const randomX = Math.random() * 60 - 30;
-      const randomY = Math.random() * 30 - 15;
-      noBtn.style.transform += ` translate(${randomX}px, ${randomY}px)`;
-    });
-
-    // ===== HEART CREATION FUNCTION =====
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.innerText = "💖";
-
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = 2 + Math.random() * 3 + "s";
-
-      document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 5000);
+    for (let i = 0; i < 40; i++) {
+      createHeart();
     }
-  </script>
+  };
+
+  no.onclick = () => {
+    noCount++;
+
+    msg.innerText = drama[Math.min(noCount - 1, drama.length - 1)];
+    box.classList.add("shake");
+
+    setTimeout(() => box.classList.remove("shake"), 400);
+
+    // YES grows aggressively
+    yes.style.transform = `scale(${1 + noCount * 0.25})`;
+
+    // NO shrinks
+    no.style.transform = `scale(${Math.max(0.4, 1 - noCount * 0.15)})`;
+  };
+
+  // NO runs away when hovered
+  no.onmouseover = () => {
+    const x = Math.random() * 200 - 100;
+    const y = Math.random() * 100 - 50;
+    no.style.transform += ` translate(${x}px, ${y}px)`;
+  };
+
+  function createHeart() {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerText = "💖";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.animationDuration = 2 + Math.random() * 2 + "s";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 4000);
+  }
+</script>
 
 </body>
 </html>
